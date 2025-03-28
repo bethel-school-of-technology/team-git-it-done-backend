@@ -1,0 +1,6 @@
+@FareShare_api_HostAddress = http://localhost:5072
+
+GET {{FareShare_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
