@@ -1,41 +1,50 @@
+//using team.Migrations;
+using team.Models;
+using team.Repositories;
+
+//using team.Repositories;
+
+//using team.BillDatabaseSettings;
+
+//using MyApi.AddControllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//builder.Services.AddScoped<ICoffeeRepository, CoffeeRepository>();
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+//MAIA~ implement DatatBase Here (https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916749/pages/12026035/show)
+
+//builder.Services.AddSqlite<BillDbContext>("Data Source=team.db");
+
+//builder.Services.AddScoped<IBillRepository, BillRepository>();
+
+// builder.Services.Configure<BillDatabaseSettings>(
+//     builder.Configuration.GetSection("BillDatabaseSettings")
+// );
+
+//builder.Services.AddScoped<IBillRepository, NoSqlBillRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors(builder =>
+    builder
+        .WithOrigins("http://localhost:8100", "http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+);
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
