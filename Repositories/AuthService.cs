@@ -1,12 +1,13 @@
-using Backend_Users.Models;
+using fareShare.Models;
 using bcrypt = BCrypt.Net.BCrypt;
 
-using BillDbContext.Migrations:
+using BillDbContext.Migrations;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using fareShare.Migrations;
 
 namespace Backend_Users.Repositories;
 

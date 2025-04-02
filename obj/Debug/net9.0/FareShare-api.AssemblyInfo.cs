@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FareShare-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c806366f03628f658750ae82c8cb9c21dea8d2f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+487037c2cfb81f670d8532a2a825b6d62d42b84c")]
 [assembly: System.Reflection.AssemblyProductAttribute("FareShare-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FareShare-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

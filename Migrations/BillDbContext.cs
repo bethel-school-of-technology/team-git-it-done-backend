@@ -1,7 +1,8 @@
-using team.Models;
+using fareshare.Models;
+using fareShare.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace team.Migrations;
+namespace fareShare.Migrations;
 
 public class BillDbContext : DbContext
 {
@@ -16,14 +17,26 @@ public class BillDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        //modelBuilder.Entity<Bill>(entity =>
+        
         {
-            // MAIA~ Im not sure what we want to call the properties for the bills yet so feel free to change below. I kept the example from Backend framworks LESSON 10: Rest APIs > Setting up data > https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916749/pages/12026035/show
+            // Zian -> I added the entity configuration for the Bill class.
+            // The Bill link class is a one to many relationship, there is one bill to many BillLinks
+            modelBuilder.Entity<Bill>(entity =>
+            {
+                entity.HasKey(e => e.BillId);
+                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Description).IsRequired();
+                entity.Property(e => e.Price).IsRequired();
+            });
 
-            // entity.HasKey(e => e.BillId);
-            // entity.Property(e => e.Name).IsRequired();
-            // entity.Property(e => e.Description).IsRequired();
-            // entity.Property(e => e.Price).IsRequired();
+            modelBuilder.Entity<BillLink>(entity =>
+            {
+                entity.HasKey(e => e.BillLinkId);
+                entity.HasOne(dl => dl.Bill)
+                    .WithMany(b => b.BillLinks)  // One Bill to many BillLinks
+                    .HasForeignKey(dl => dl.BillId)
+                    .OnDelete(DeleteBehavior.Cascade);  // Cascade delete to remove related BillLinks when a Bill is deleted
+            });
 
 
             // MAIA~ DataBase not yet intergrated. Info > Backend C# Lesson 11: Token Authentication > Create the User Data Model > https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916755/pages/12026113/show
@@ -34,25 +47,6 @@ public class BillDbContext : DbContext
                 entity.HasIndex(x => x.Email).IsUnique();
                 entity.Property(e => e.Password).IsRequired();
             });
-        }//);
-
-        // modelBuilder
-        //     .Entity<Bill>()
-        //     .HasData(
-        //         new Bill
-        //         {
-        //             BillId = 1,
-        //             // Name = "Cappuccino",
-        //             // Description = "Freshly pulled double espresso with steamed milk",
-        //             // Price = 3.99,
-        //         },
-        //         new Bill
-        //         {
-        //             BillId = 2,
-        //             // Name = "Americano",
-        //             // Description = "Flavorful espresso topped with hot water",
-        //             // Price = 2.49,
-        //         }
-        //     );
+        }
     }
 }

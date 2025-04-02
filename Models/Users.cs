@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace team.Models;
+namespace fareShare.Models;
 
 public class User
 {

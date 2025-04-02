@@ -1,6 +1,6 @@
-using team.Models;
+using fareShare.Models;
 
-namespace team.Repositories;
+namespace fareShare.Repositories;
 
 public interface IAuthService
 {
