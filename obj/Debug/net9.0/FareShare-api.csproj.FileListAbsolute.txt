@@ -1,8 +1,0 @@
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.csproj.AssemblyReference.cache
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.AssemblyInfoInputs.cache
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.AssemblyInfo.cs
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.csproj.CoreCompileInputs.cache
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\zian\OneDrive\Desktop\FareShare\FareShare-api\obj\Debug\net9.0\FareShare-api.sourcelink.json
