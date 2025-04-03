@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using fareShare.Models;
 
-namespace fareshare.Models;
+namespace fareShare.Models;
 
 
 //Zian -> To link the bills with a list of user and make it easier to query with SQL later because we keep track of all the users that are linked to a bill
