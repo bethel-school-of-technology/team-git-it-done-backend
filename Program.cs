@@ -1,6 +1,7 @@
 //using team.Migrations;
-using team.Models;
-using team.Repositories;
+using fareShare.Migrations;
+using fareShare.Models;
+using fareShare.Repositories;
 
 //using team.Repositories;
 
@@ -18,7 +19,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 //MAIA~ implement DatatBase Here (https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916749/pages/12026035/show)
 
-//builder.Services.AddSqlite<BillDbContext>("Data Source=team.db");
+builder.Services.AddSqlite<BillDbContext>("Data Source=fareShare.db");
 
 //builder.Services.AddScoped<IBillRepository, BillRepository>();
 

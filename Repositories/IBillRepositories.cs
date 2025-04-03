@@ -1,4 +1,3 @@
-using fareshare.Models;
 using fareShare.Models;
 
 namespace fareShare.Repositories;
@@ -7,7 +6,6 @@ public interface IBillRepositories
 {
     Bill CreateBill(Bill bill);
     Bill GetBill(int id);
-    List<Bill> GetAllBills();
     Bill UpdateBill(Bill bill);
     void DeleteBill(int id);
     List<Bill> GetBillsByUserId(int userId);

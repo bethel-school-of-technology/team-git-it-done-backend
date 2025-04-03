@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace fareshare.Models;
+namespace fareShare.Models;
 
 // Zian -> This is the Bill class that will be used to describe the bill and its properties.
 
@@ -12,5 +12,6 @@ public class Bill
     public string? Name {get; set;}
     public string? Description {get; set;}
     public float? Price {get; set;}
+    public int? CreatorId { get; set; } 
     public ICollection<BillLink> BillLinks { get; set; }
 }
