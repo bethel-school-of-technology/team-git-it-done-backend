@@ -6,7 +6,7 @@ namespace fareShare.Migrations;
 
 public class BillDbContext : DbContext
 {
-    //public DbSet<Bill> Bill { get; set; }
+    public DbSet<Bill> Bill { get; set; }
 
     public DbSet<User> Users { get; set; }
 
@@ -17,7 +17,6 @@ public class BillDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        
         {
             // Zian -> I added the entity configuration for the Bill class.
             // The Bill link class is a one to many relationship, there is one bill to many BillLinks
@@ -32,12 +31,12 @@ public class BillDbContext : DbContext
             modelBuilder.Entity<BillLink>(entity =>
             {
                 entity.HasKey(e => e.BillLinkId);
-                entity.HasOne(dl => dl.Bill)
-                    .WithMany(b => b.BillLinks)  // One Bill to many BillLinks
+                entity
+                    .HasOne(dl => dl.Bill)
+                    .WithMany(b => b.BillLinks) // One Bill to many BillLinks
                     .HasForeignKey(dl => dl.BillId)
-                    .OnDelete(DeleteBehavior.Cascade);  // Cascade delete to remove related BillLinks when a Bill is deleted
+                    .OnDelete(DeleteBehavior.Cascade); // Cascade delete to remove related BillLinks when a Bill is deleted
             });
-
 
             // MAIA~ DataBase not yet intergrated. Info > Backend C# Lesson 11: Token Authentication > Create the User Data Model > https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916755/pages/12026113/show
             modelBuilder.Entity<User>(entity =>

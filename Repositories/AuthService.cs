@@ -1,13 +1,11 @@
-using fareShare.Models;
-using bcrypt = BCrypt.Net.BCrypt;
-
-using BillDbContext.Migrations;
-
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using fareShare.Migrations;
+using fareShare.Models;
+using fareShare.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using Bcrypt = BCrypt.Net.BCrypt;
 
 namespace Backend_Users.Repositories;
 
@@ -24,24 +22,8 @@ public class AuthService : IAuthService
 
     public User CreateUser(User user)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public string SignIn(string email, string password)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    private static BillDbContext _context;
-
-    public AuthService(BillDbContext context)
-    {
-        _context = context;
-    }
-
-    public User CreateUser(User user)
-    {
-        var passwordHash = bcrypt.HashPassword(user.Password);
+        // TODO: Hash Password
+        var passwordHash = Bcrypt.HashPassword(user.Password);
         user.Password = passwordHash;
 
         _context.Add(user);
@@ -56,7 +38,7 @@ public class AuthService : IAuthService
 
         if (user != null)
         {
-            verified = bcrypt.Verify(password, user.Password);
+            verified = Bcrypt.Verify(password, user.Password);
         }
 
         if (user == null || !verified)

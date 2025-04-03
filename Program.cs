@@ -1,10 +1,12 @@
-//using team.Migrations;
-using team.Models;
-using team.Repositories;
+//using fareShare.Migrations;
+using Backend_Users.Repositories;
+using fareShare.Migrations;
+using fareShare.Models;
+using fareShare.Repositories;
 
-//using team.Repositories;
+//using fareShare.Repositories;
 
-//using team.BillDatabaseSettings;
+//using fareShare.BillDatabaseSettings;
 
 //using MyApi.AddControllers;
 
@@ -12,13 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddScoped<ICoffeeRepository, CoffeeRepository>();
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 //MAIA~ implement DatatBase Here (https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916749/pages/12026035/show)
 
-//builder.Services.AddSqlite<BillDbContext>("Data Source=team.db");
+builder.Services.AddSqlite<BillDbContext>("Data Source=fareShare.db");
 
 //builder.Services.AddScoped<IBillRepository, BillRepository>();
 
@@ -37,11 +39,11 @@ app.UseCors(builder =>
         .AllowAnyMethod()
 );
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
