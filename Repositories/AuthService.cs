@@ -7,7 +7,7 @@ using fareShare.Repositories;
 using Microsoft.IdentityModel.Tokens;
 using Bcrypt = BCrypt.Net.BCrypt;
 
-namespace Backend_Users.Repositories;
+namespace fareShare.Repositories;
 
 public class AuthService : IAuthService
 {

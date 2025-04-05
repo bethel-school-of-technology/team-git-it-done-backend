@@ -1,7 +1,11 @@
 //using team.Migrations;
+
 using fareShare.Migrations;
 using fareShare.Models;
 using fareShare.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 //using fareShare.Repositories;
 
@@ -13,7 +17,37 @@ var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddScoped<ICoffeeRepository, CoffeeRepository>();
 builder.Services.AddControllers();
-//builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "l11_tokens", Version = "v1" });
+    c.AddSecurityDefinition(
+        "Bearer",
+        new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please insert JWT with Bearer into field",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+        }
+    );
+    c.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer",
+                    },
+                },
+                new string[] { }
+            },
+        }
+    );
+});
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -30,6 +64,30 @@ builder.Services.AddSqlite<BillDbContext>("Data Source=fareShare.db");
 //builder.Services.AddScoped<IBillRepository, NoSqlBillRepository>();
 
 var app = builder.Build();
+var secretKey = builder.Configuration["TokenSecret"];
+
+builder
+    .Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(cfg =>
+    {
+        cfg.RequireHttpsMetadata = true;
+        cfg.SaveToken = true;
+        cfg.TokenValidationParameters =
+            new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateLifetime = false,
+                RequireExpirationTime = false,
+                ClockSkew = TimeSpan.Zero,
+                ValidateIssuerSigningKey = true,
+            };
+    });
 
 app.UseCors(builder =>
     builder
