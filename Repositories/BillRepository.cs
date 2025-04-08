@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using fareShare.Repository;
 
-namespace fareShare.Repositories
+namespace fareShare.Repository;
+
+public class BillRepository : IBillRepository
 {
     public class BillRepository : IBillRepository
     {
