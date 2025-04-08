@@ -79,7 +79,7 @@ builder
         cfg.TokenValidationParameters =
             new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
             {
-                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey)),
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateLifetime = false,
