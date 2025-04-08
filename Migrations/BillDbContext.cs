@@ -1,4 +1,3 @@
-using fareshare.Models;
 using fareShare.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +8,9 @@ public class BillDbContext : DbContext
     public DbSet<Bill> Bill { get; set; }
 
     public DbSet<User> Users { get; set; }
+
+    public DbSet<BillLink> BillLink { get; set; }
+
 
     public BillDbContext(DbContextOptions<BillDbContext> options)
         : base(options) { }
