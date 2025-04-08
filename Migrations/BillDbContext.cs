@@ -9,6 +9,9 @@ public class BillDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
+    public DbSet<BillLink> BillLink { get; set; }
+
+
     public BillDbContext(DbContextOptions<BillDbContext> options)
         : base(options) { }
 

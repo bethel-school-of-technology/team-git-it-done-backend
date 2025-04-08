@@ -10,7 +10,6 @@ public interface IBillRepository
     Bill UpdateBill(Bill bill);
     void DeleteBill(int id);
     List<Bill> GetBillsByUserId(int userId);
-    List<BillLink> GetBillLinksByUserId(int userId);
     BillLink CreateBillLink(BillLink billLink);
     void DeleteBillLink(int billLinkId);
 }
