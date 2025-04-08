@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using fareShare.Repository;
 
 namespace fareShare.Repositories
 {
-    public class BillRepository : IBillRepositories
+    public class BillRepository : IBillRepository
     {
         private readonly BillDbContext _context;
 
