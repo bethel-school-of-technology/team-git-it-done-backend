@@ -1,41 +1,109 @@
+//using team.Migrations;
+
+using fareShare.Migrations;
+using fareShare.Models;
+using fareShare.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+
+//using fareShare.Repositories;
+
+//using fareShare.BillDatabaseSettings;
+
+//using MyApi.AddControllers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//builder.Services.AddScoped<ICoffeeRepository, CoffeeRepository>();
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "l11_tokens", Version = "v1" });
+    c.AddSecurityDefinition(
+        "Bearer",
+        new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please insert JWT with Bearer into field",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+        }
+    );
+    c.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer",
+                    },
+                },
+                new string[] { }
+            },
+        }
+    );
+});
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+//MAIA~ implement DatatBase Here (https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916749/pages/12026035/show)
+
+builder.Services.AddSqlite<BillDbContext>("Data Source=fareShare.db");
+
+//builder.Services.AddScoped<IBillRepository, BillRepository>();
+
+// builder.Services.Configure<BillDatabaseSettings>(
+//     builder.Configuration.GetSection("BillDatabaseSettings")
+// );
+
+//builder.Services.AddScoped<IBillRepository, NoSqlBillRepository>();
 
 var app = builder.Build();
+var secretKey = builder.Configuration["TokenSecret"];
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+builder
+    .Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(cfg =>
+    {
+        cfg.RequireHttpsMetadata = true;
+        cfg.SaveToken = true;
+        cfg.TokenValidationParameters =
+            new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            {
+                IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey)),
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateLifetime = false,
+                RequireExpirationTime = false,
+                ClockSkew = TimeSpan.Zero,
+                ValidateIssuerSigningKey = true,
+            };
+    });
+
+app.UseCors(builder =>
+    builder
+        .WithOrigins("http://localhost:8100", "http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+);
+
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
