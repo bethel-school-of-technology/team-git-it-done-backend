@@ -3,9 +3,9 @@ using fareShare.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace fareShare.Repositories;
+namespace fareShare.Repository;
 
-public class BillRepository : IBillRepositories
+public class BillRepository : IBillRepository
 {
 	private readonly BillDbContext _context;
 

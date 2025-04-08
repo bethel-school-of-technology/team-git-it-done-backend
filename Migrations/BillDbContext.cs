@@ -1,4 +1,3 @@
-using fareshare.Models;
 using fareShare.Models;
 using Microsoft.EntityFrameworkCore;
 

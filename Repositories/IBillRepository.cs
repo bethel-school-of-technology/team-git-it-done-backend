@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using fareShare.Models;
 
-namespace fareShare.Repositories;
+namespace fareShare.Repository;
 
-public interface IBillRepositories
+public interface IBillRepository
 {
     Bill CreateBill(Bill bill);
     Bill GetBill(int id);
