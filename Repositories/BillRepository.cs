@@ -10,8 +10,6 @@ namespace fareShare.Repository;
 
 public class BillRepository : IBillRepository
 {
-    public class BillRepository : IBillRepository
-    {
         private readonly BillDbContext _context;
 
         public BillRepository(BillDbContext context)
@@ -130,6 +128,5 @@ public class BillRepository : IBillRepository
 
             _context.SaveChanges();
             return existingBill;
-        }
     }
 }
