@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 
 //using fareShare.BillDatabaseSettings;
 
-//using MyApi.AddControllers;
+// using fareShare.AddControllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,7 +79,9 @@ builder
         cfg.TokenValidationParameters =
             new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
             {
-                IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    System.Text.Encoding.UTF8.GetBytes(secretKey)
+                ),
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateLifetime = false,
@@ -96,11 +98,11 @@ app.UseCors(builder =>
         .AllowAnyMethod()
 );
 
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
