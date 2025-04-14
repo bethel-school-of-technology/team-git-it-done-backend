@@ -3,6 +3,7 @@
 using fareShare.Migrations;
 using fareShare.Models;
 using fareShare.Repositories;
+using fareShare.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -50,6 +51,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBillRepository, BillRepository>();
+
 
 //MAIA~ implement DatatBase Here (https://bethel.populiweb.com/router/courseofferings/10739695/lessons/10916749/pages/12026035/show)
 
