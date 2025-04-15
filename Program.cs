@@ -66,7 +66,7 @@ builder.Services.AddSqlite<BillDbContext>("Data Source=fareShare.db");
 
 //builder.Services.AddScoped<IBillRepository, NoSqlBillRepository>();
 
-var app = builder.Build();
+
 var secretKey = builder.Configuration["TokenSecret"];
 
 builder
@@ -93,6 +93,8 @@ builder
                 ValidateIssuerSigningKey = true,
             };
     });
+
+    var app = builder.Build();
 
 app.UseCors(builder =>
     builder
