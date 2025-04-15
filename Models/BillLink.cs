@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using fareShare.Models;
 
 namespace fareShare.Models;
@@ -7,8 +8,10 @@ namespace fareShare.Models;
 
 public class BillLink
 {
+    [JsonIgnore]
     public int BillLinkId { get; set; }
     public int UserId { get; set; }
     public int BillId { get; set; }
+    [JsonIgnore]
     public Bill? Bill { get; set; }
 }

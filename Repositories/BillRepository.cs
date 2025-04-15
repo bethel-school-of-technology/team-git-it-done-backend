@@ -16,31 +16,28 @@ public class BillRepository : IBillRepository
     {
         _context = context;
     }
-
     public Bill CreateBill(Bill bill)
     {
-        if (bill == null)
-        {
-            throw new ArgumentNullException(nameof(bill));
-        }
+        if (bill == null) throw new ArgumentNullException(nameof(bill));
 
-        // Save the Bill
         _context.Bill.Add(bill);
         _context.SaveChanges();
 
-        // Automatically link the creator to the Bill using BillLink
         if (bill.CreatorId == null)
-        {
             throw new InvalidOperationException("CreatorId must be set when creating a bill.");
-        }
 
-        var billLink = new BillLink { BillId = bill.BillId, UserId = bill.CreatorId.Value };
+        var billLink = new BillLink
+        {
+            BillId = bill.BillId,
+            UserId = bill.CreatorId.Value
+        };
 
         _context.BillLink.Add(billLink);
         _context.SaveChanges();
 
         return bill;
     }
+
 
     public BillLink CreateBillLink(BillLink billLink)
     {
