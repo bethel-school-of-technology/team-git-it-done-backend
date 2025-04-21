@@ -12,6 +12,7 @@ public class Bill
     public string? Name { get; set; }
     public string? Description { get; set; }
     public float? Price { get; set; }
+    public float? SharedPrice {get; set; }
     public int? CreatorId { get; set; }
     public ICollection<BillLink> BillLinks { get; set; }
 }

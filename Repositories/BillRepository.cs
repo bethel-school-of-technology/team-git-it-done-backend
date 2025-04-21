@@ -20,6 +20,7 @@ public class BillRepository : IBillRepository
     {
         if (bill == null) throw new ArgumentNullException(nameof(bill));
 
+        bill.SharedPrice = bill.Price;
         _context.Bill.Add(bill);
         _context.SaveChanges();
 
@@ -46,8 +47,11 @@ public class BillRepository : IBillRepository
             throw new ArgumentNullException(nameof(billLink));
         }
 
+        
         _context.BillLink.Add(billLink);
         _context.SaveChanges();
+
+        this.SetBillShare(billLink.BillId);
 
         return billLink;
     }
@@ -119,5 +123,34 @@ public class BillRepository : IBillRepository
 
         _context.SaveChanges();
         return existingBill;
+    }
+
+    public void SetBillShare(int billId)
+    {
+        var bill = _context.Bill.Include(b => b.BillLinks).FirstOrDefault(b => b.BillId == billId);
+
+        if (bill == null)
+            throw new ArgumentNullException(nameof(bill));
+
+        var totalShare = bill.BillLinks.Count;
+
+        var sharePerUser = bill.Price / totalShare;
+
+        bill.SharedPrice = sharePerUser;
+
+        _context.Bill.Update(bill);
+        _context.SaveChanges();
+    }
+
+    public void SettleBill(int billLinkId, float amount)
+    {
+        var billLink = _context.BillLink.Find(billLinkId);
+        if (billLink == null)
+        {
+            throw new ArgumentNullException(nameof(billLink));
+        }
+
+        billLink.Settled += amount;
+        _context.SaveChanges();
     }
 }

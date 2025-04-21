@@ -122,6 +122,23 @@ public class BillController : ControllerBase
         }
     }
 
+    //Use this to settle part or all of a bill for a user.
+    // PUT: api/Bill/settle/7
+    [HttpPut("settle/{billLinkId}")]
+    public IActionResult SettleBill(int billLinkId, float amount)
+    {
+        try
+        {
+            _billRepository.SettleBill(billLinkId, amount);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to settle bill link with id {billLinkId}");
+            return NotFound(ex.Message);
+        }
+    }
+
     //Use this to Delete a bill, not the link between a user and a bill.
     // DELETE: api/Bill/5
     [HttpDelete("{id}")]

@@ -8,10 +8,11 @@ namespace fareShare.Models;
 
 public class BillLink
 {
-    [JsonIgnore]
+    // [JsonIgnore]
     public int BillLinkId { get; set; }
     public int UserId { get; set; }
     public int BillId { get; set; }
+    public float Settled { get; set; }
     [JsonIgnore]
     public Bill? Bill { get; set; }
 }
