@@ -12,4 +12,6 @@ public interface IBillRepository
     List<Bill> GetBillsByUserId(int userId);
     BillLink CreateBillLink(BillLink billLink);
     void DeleteBillLink(int billLinkId);
+    void SetBillShare (int billId);
+    void SettleBill (int billLinkId, float amount);
 }
