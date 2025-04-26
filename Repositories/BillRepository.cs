@@ -153,4 +153,15 @@ public class BillRepository : IBillRepository
         billLink.Settled += amount;
         _context.SaveChanges();
     }
+
+    public float GetBillShare(int billId, int userId)
+    {
+        var billLink = _context.BillLink.FirstOrDefault(bl => bl.BillId == billId && bl.UserId == userId);
+        if (billLink == null)
+        {
+            throw new ArgumentNullException(nameof(billLink));
+        }
+
+        return billLink.Settled;
+    }
 }
