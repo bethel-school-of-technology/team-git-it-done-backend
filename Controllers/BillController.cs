@@ -2,6 +2,9 @@ using fareShare.Models;
 using fareShare.Repositories;
 using fareShare.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace fareShare.Controllers;
 
@@ -20,9 +23,12 @@ public class BillController : ControllerBase
 
     //Use this to get all bills filtered to a user.
     // GET: api/Bill/user/3
-    [HttpGet("user/{userId}")]
-    public IActionResult GetBillsByUser(int userId)
+    // Should use authorize to get userID for this call
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet("user")]
+    public IActionResult GetBillsByUser()
     {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         try
         {
             var bills = _billRepository.GetBillsByUserId(userId);
@@ -37,6 +43,7 @@ public class BillController : ControllerBase
 
     //Use this to get the full detail of a single bill
     // GET: api/Bill/5
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("{id}")]
     public IActionResult GetBill(int id)
     {
@@ -54,6 +61,7 @@ public class BillController : ControllerBase
 
     //Use this to create a bill, will automatically link the creator to the bill
     // POST: api/Bill
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost]
     public IActionResult CreateBill([FromBody] CreateBillDto dto)
     {
@@ -64,7 +72,7 @@ public class BillController : ControllerBase
                 Name = dto.Name,
                 Description = dto.Description,
                 Price = dto.Price,
-                CreatorId = dto.CreatorId
+                CreatorId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)
             };
 
             var created = _billRepository.CreateBill(bill);
@@ -80,6 +88,7 @@ public class BillController : ControllerBase
 
     // Use this to link a user to a bill
     // POST: api/Bill/link
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost("link")]
     public IActionResult CreateBillLink([FromBody] BillLink billLink)
     {
@@ -97,6 +106,7 @@ public class BillController : ControllerBase
 
     //Use this to update a bill's details.
     // PUT: api/Bill/5
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut("{id}")]
     public IActionResult UpdateBill(int id, [FromBody] UpdateBillDto updatedBillDto)
     {
@@ -124,6 +134,7 @@ public class BillController : ControllerBase
 
     //Use this to settle part or all of a bill for a user.
     // PUT: api/Bill/settle/7
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut("settle/{billLinkId}")]
     public IActionResult SettleBill(int billLinkId, float amount)
     {
@@ -141,6 +152,7 @@ public class BillController : ControllerBase
 
     //Use this to Delete a bill, not the link between a user and a bill.
     // DELETE: api/Bill/5
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpDelete("{id}")]
     public IActionResult DeleteBill(int id)
     {
@@ -158,6 +170,7 @@ public class BillController : ControllerBase
 
     //Use this to delete the link between a user and a bill, not the bill itself.
     // DELETE: api/Bill/link/7
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpDelete("link/{billLinkId}")]
     public IActionResult DeleteBillLink(int billLinkId)
     {
