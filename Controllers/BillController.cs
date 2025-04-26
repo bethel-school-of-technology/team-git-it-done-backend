@@ -152,7 +152,7 @@ public class BillController : ControllerBase
     }
 
     //Use this to settle part or all of a bill for a user.
-    // PUT: api/Bill/settle/7
+    // PUT: api/Bill/settle/8
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut("settle/{billId}")]
     public IActionResult SettleBill(int billId, float amount)
