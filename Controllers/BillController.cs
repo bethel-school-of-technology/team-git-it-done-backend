@@ -154,20 +154,28 @@ public class BillController : ControllerBase
     //Use this to settle part or all of a bill for a user.
     // PUT: api/Bill/settle/7
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [HttpPut("settle/{billLinkId}")]
-    public IActionResult SettleBill(int billLinkId, float amount)
+    [HttpPut("settle/{billId}")]
+    public IActionResult SettleBill(int billId, float amount)
     {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         try
         {
-            _billRepository.SettleBill(billLinkId, amount);
+            var billLink = _billRepository.GetBill(billId).BillLinks.FirstOrDefault(bl => bl.UserId == userId);
+            if (billLink == null)
+            {
+                return NotFound("Bill link not found.");
+            }
+
+            _billRepository.SettleBill(billLink.BillLinkId, amount);
             return NoContent();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Failed to settle bill link with id {billLinkId}");
+            _logger.LogError(ex, $"Failed to settle bill with id {billId} for user {userId}");
             return NotFound(ex.Message);
         }
     }
+    
 
     //Use this to Delete a bill, not the link between a user and a bill.
     // DELETE: api/Bill/5

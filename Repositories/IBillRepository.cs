@@ -13,6 +13,6 @@ public interface IBillRepository
     BillLink CreateBillLink(BillLink billLink);
     void DeleteBillLink(int billLinkId);
     void SetBillShare (int billId);
-    void SettleBill (int billLinkId, float amount);
+    void SettleBill (int billId, float amount);
     float GetBillShare (int billId, int userId);
 }
