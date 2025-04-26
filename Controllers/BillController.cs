@@ -59,6 +59,25 @@ public class BillController : ControllerBase
         }
     }
 
+    //Use this to get the amount a user has settled for a bill
+    // GET: api/Bill/settled/5
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet("settled/{billId}")]
+    public IActionResult GetBillSettled(int billId)
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        try
+        {
+            var settled = _billRepository.GetBillShare(billId, userId);
+            return Ok(settled);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to get settled amount for bill with id {billId}");
+            return NotFound(ex.Message);
+        }
+    }
+
     //Use this to create a bill, will automatically link the creator to the bill
     // POST: api/Bill
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
