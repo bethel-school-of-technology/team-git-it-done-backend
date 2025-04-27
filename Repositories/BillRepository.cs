@@ -76,7 +76,9 @@ public class BillRepository : IBillRepository
             throw new ArgumentNullException(nameof(link));
         }
 
+        var billId = link.BillId;
         _context.BillLink.Remove(link);
+        this.SetBillShare(billId);
         _context.SaveChanges();
     }
 
@@ -122,6 +124,7 @@ public class BillRepository : IBillRepository
         existingBill.Price = updatedBill.Price;
 
         _context.SaveChanges();
+        this.SetBillShare(existingBill.BillId);
         return existingBill;
     }
 
