@@ -90,4 +90,15 @@ public class AuthService : IAuthService
 
         return user.UserId;
     }
+
+    public User GetUser(int userId)
+    {
+        var user = _context.Users.SingleOrDefault(x => x.UserId == userId);
+        if (user == null)
+        {
+            return null;
+        }
+
+        return user;
+    }
 }
