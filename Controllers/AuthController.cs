@@ -47,4 +47,24 @@ public class AuthController : ControllerBase
 
         return Ok(token);
     }
+
+    [HttpGet]
+    [Route("user")]
+    public ActionResult<int> GetUserId(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return BadRequest();
+        }
+
+        var userId = _authService.GetUserId(email);
+
+        if (userId == 0)
+        {
+            return NotFound();
+        }
+
+        return Ok(userId);
+    }
 }
+    

@@ -79,4 +79,15 @@ public class AuthService : IAuthService
 
         return encodedJwt;
     }
+
+    public int GetUserId(string email)
+    {
+        var user = _context.Users.SingleOrDefault(x => x.Email == email);
+        if (user == null)
+        {
+            return 0;
+        }
+
+        return user.UserId;
+    }
 }
