@@ -66,5 +66,24 @@ public class AuthController : ControllerBase
 
         return Ok(userId);
     }
+
+    [HttpGet]
+    [Route("user/{id}")]
+    public ActionResult<User> GetUser(int id)
+    {
+        if (id <= 0)
+        {
+            return BadRequest();
+        }
+
+        var user = _authService.GetUser(id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(user);
+    }
 }
     
