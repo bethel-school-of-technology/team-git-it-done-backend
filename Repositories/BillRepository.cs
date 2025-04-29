@@ -47,6 +47,11 @@ public class BillRepository : IBillRepository
             throw new ArgumentNullException(nameof(billLink));
         }
 
+        var existingLink = _context.BillLink.FirstOrDefault(bl => bl.BillId == billLink.BillId && bl.UserId == billLink.UserId);
+        if (existingLink != null)
+        {
+            throw new InvalidOperationException("This user is already linked to the bill.");
+        }
         
         _context.BillLink.Add(billLink);
         _context.SaveChanges();
