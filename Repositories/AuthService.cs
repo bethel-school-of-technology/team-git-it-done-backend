@@ -62,11 +62,7 @@ public class AuthService : IAuthService
         var claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-            new Claim(
-                "profile_picture",
-                user.Img
-                    ?? "https://i.pinimg.com/originals/c0/9b/6d/c09b6d7edb7b4b89b382aa6ca0a761de.jpg"
-            ), //Maia ~ profile picture 'Custom' claim
+            new Claim("profile_picture", user.Img ?? ""), //Maia ~ profile picture 'Custom' claim
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
             new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
             new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? ""),

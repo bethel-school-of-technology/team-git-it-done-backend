@@ -9,4 +9,6 @@ public interface IAuthService
     int GetUserId(string email);
     User GetUser(int userId);
     void UpdateUser(User user);
+
+    void UpdateProPic(int userId, string img);
 }

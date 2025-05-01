@@ -10,8 +10,8 @@ using fareShare.Migrations;
 namespace FareShare_api.Migrations
 {
     [DbContext(typeof(BillDbContext))]
-    [Migration("20250430162352_AddIMGMigrations")]
-    partial class AddIMGMigrations
+    [Migration("20250501230949_AddImgToDBCTX")]
+    partial class AddImgToDBCTX
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
