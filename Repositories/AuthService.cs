@@ -62,7 +62,6 @@ public class AuthService : IAuthService
         var claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-            new Claim("profile_picture", user.Img ?? ""), //Maia ~ profile picture 'Custom' claim
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
             new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
             new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? ""),
@@ -71,7 +70,7 @@ public class AuthService : IAuthService
         // Create token
         var jwt = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddMinutes(30),
+            expires: DateTime.Now.AddMinutes(5),
             signingCredentials: signingCredentials
         );
 
@@ -101,22 +100,5 @@ public class AuthService : IAuthService
         }
 
         return user;
-    }
-
-    public void UpdateProPic(int userId, string img)
-    {
-        var user = _context.Users.SingleOrDefault(u => u.UserId == userId);
-        if (user == null)
-            throw new Exception("User not found.");
-
-        user.Img = img;
-        _context.Users.Update(user);
-        _context.SaveChanges();
-    }
-
-    public void UpdateUser(User user)
-    {
-        _context.Users.Update(user);
-        _context.SaveChanges();
     }
 }

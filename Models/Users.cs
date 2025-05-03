@@ -9,7 +9,6 @@ public class User
     [JsonIgnore]
     public int UserId { get; set; }
 
-    public string? Img { get; set; } // Maia~ Profile Image
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
 
