@@ -44,6 +44,7 @@ public class BillDbContext : DbContext
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UserId);
+                entity.Property(e => e.Img);
                 entity.Property(e => e.Email).IsRequired();
                 entity.HasIndex(x => x.Email).IsUnique();
                 entity.Property(e => e.Password).IsRequired();
