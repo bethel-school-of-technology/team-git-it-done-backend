@@ -79,9 +79,6 @@ namespace FareShare_api.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Img")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 

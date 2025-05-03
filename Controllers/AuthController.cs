@@ -85,18 +85,5 @@ public class AuthController : ControllerBase
 
         return Ok(user);
     }
-
-    [HttpPost("update-pro-pic")]
-    public ActionResult UpdateProfilePic([FromBody] User user)
-    {
-        var existingUser = _authService.GetUser(user.UserId);
-        if (existingUser == null)
-        {
-            return NotFound("user not found :(");
-        }
-        existingUser.Img = user.Img;
-        _authService.UpdateUser(existingUser);
-
-        return Ok(new { message = "profile pic updated successfully", img = existingUser.Img });
-    }
 }
+    
