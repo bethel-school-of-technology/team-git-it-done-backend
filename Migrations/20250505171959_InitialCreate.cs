@@ -19,6 +19,7 @@ namespace FareShare_api.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<float>(type: "REAL", nullable: false),
+                    SharedPrice = table.Column<float>(type: "REAL", nullable: true),
                     CreatorId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -32,6 +33,7 @@ namespace FareShare_api.Migrations
                 {
                     UserId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Img = table.Column<string>(type: "TEXT", nullable: true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: true),
                     LastName = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
@@ -49,7 +51,8 @@ namespace FareShare_api.Migrations
                     BillLinkId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    BillId = table.Column<int>(type: "INTEGER", nullable: false)
+                    BillId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Settled = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
