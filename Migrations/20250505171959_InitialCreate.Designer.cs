@@ -10,7 +10,7 @@ using fareShare.Migrations;
 namespace FareShare_api.Migrations
 {
     [DbContext(typeof(BillDbContext))]
-    [Migration("20250409202701_InitialCreate")]
+    [Migration("20250505171959_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,6 +39,9 @@ namespace FareShare_api.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("REAL");
 
+                    b.Property<float?>("SharedPrice")
+                        .HasColumnType("REAL");
+
                     b.HasKey("BillId");
 
                     b.ToTable("Bill");
@@ -52,6 +55,9 @@ namespace FareShare_api.Migrations
 
                     b.Property<int>("BillId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<float>("Settled")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
@@ -74,6 +80,9 @@ namespace FareShare_api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Img")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
